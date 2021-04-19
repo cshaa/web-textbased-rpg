@@ -1,5 +1,6 @@
 import { otazka, zprava } from "./ui";
-import { predmety } from "./state";
+import { defaultState } from "./state";
+const { predmety } = defaultState;
 
 export async function obchod() {
   let txt =

@@ -1,5 +1,5 @@
 import { kompas, otazka, zprava } from "./ui";
-import { hrac, predmety, mapa } from "./state";
+import { defaultState } from "./state";
 import { obchod } from "./obchod";
 import { soubojSNahodnouPotvorou } from "./souboj";
 import {
@@ -8,6 +8,7 @@ import {
   zrusZvyrazneniPoli,
   zvyrazniPole
 } from "./mapa";
+const { hrac, predmety, mapa } = defaultState;
 
 let strt = document.querySelector<HTMLButtonElement>("#start");
 let rstrt = document.querySelector<HTMLButtonElement>("#restart");

@@ -1,6 +1,7 @@
 import { otazka, zprava } from "./ui";
-import { predmety, hrac, mapa } from "./state";
+import { defaultState } from "./state";
 import { zrusZvyrazneniPoli } from "./mapa";
+const { predmety, hrac, mapa } = defaultState;
 
 export let potvory = [
   { jmeno: "Horský troll", hp: 300, dmg: 10 },

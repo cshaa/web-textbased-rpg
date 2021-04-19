@@ -1,4 +1,5 @@
-import { mapa, hrac } from "./state";
+import { defaultState } from "./state";
+const { mapa, hrac } = defaultState;
 
 export function generujPrazdnouMapu() {
   const el = document.querySelector("#mapa");
