@@ -1,11 +1,10 @@
-import { defaultState } from "./state";
-const { mapa, hrac } = defaultState;
+import { state as s } from "./state";
 
 export function generujPrazdnouMapu() {
   const el = document.querySelector("#mapa");
 
   let y = 0;
-  for (const radek of mapa) {
+  for (const radek of s.mapa) {
     const tr = document.createElement("tr");
 
     let x = 0;
@@ -24,7 +23,7 @@ export function generujPrazdnouMapu() {
 
 export function odkryjPole(x: number, y: number) {
   const el = document.querySelector(`#mapa-misto-x${x}y${y}`);
-  const misto = mapa[y][x];
+  const misto = s.mapa[y][x];
   const ikona = legenda[misto];
   el.textContent = ikona;
 }

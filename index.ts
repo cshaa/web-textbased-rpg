@@ -1,5 +1,5 @@
 import { kompas, otazka, zprava, dotaz } from "./ui";
-import { defaultState, nazvyUlozenychHer, nahrat, ulozit } from "./state";
+import { state as s, nazvyUlozenychHer, nahrat, ulozit } from "./state";
 import { obchod } from "./obchod";
 import { soubojSNahodnouPotvorou } from "./souboj";
 import {
@@ -9,7 +9,6 @@ import {
   zvyrazniPole
 } from "./mapa";
 import "./style.css";
-const { hrac, predmety, mapa } = defaultState;
 
 let strt = document.querySelector<HTMLButtonElement>("#start");
 let rstrt = document.querySelector<HTMLButtonElement>("#restart");
@@ -53,26 +52,26 @@ async function pribehHrdiny() {
   await zprava("Hurá! ⚔️ Jdeme na to!", "Pokračovat");
 
   while (true) {
-    let misto = mapa[hrac.y][hrac.x];
-    let txt = "Máš " + hrac.hp + " HP.";
+    let misto = s.mapa[s.hrac.y][s.hrac.x];
+    let txt = "Máš " + s.hrac.hp + " HP.";
     zrusZvyrazneniPoli();
-    odkryjPole(hrac.x, hrac.y);
-    zvyrazniPole(hrac.x, hrac.y);
+    odkryjPole(s.hrac.x, s.hrac.y);
+    zvyrazniPole(s.hrac.x, s.hrac.y);
 
     switch (misto) {
       case "Dům":
-        hrac.hp = Math.max(hrac.hp, 100);
+        s.hrac.hp = Math.max(s.hrac.hp, 100);
         txt +=
           " Narazil jsi na dům 🏡️ a tvoje HP bylo obnoveno, nyní máš " +
-          hrac.hp +
+          s.hrac.hp +
           " HP.";
         break;
 
       case "Les":
-        hrac.hp -= 10;
+        s.hrac.hp -= 10;
         txt +=
           " Prodíráš se lesem 🌳️ a zranil ses o ostružiny, nyní máš " +
-          hrac.hp +
+          s.hrac.hp +
           " HP.";
         break;
 
@@ -84,13 +83,13 @@ async function pribehHrdiny() {
         break;
 
       case "Hotel":
-        hrac.hp = 200;
+        s.hrac.hp = 200;
         txt +=
           " Dorazil jsi do hotelu 🏨️ a ubytoval ses tam. Protože ses dobře bavil 🍻️, " +
           "odpočinul sis a doplnil jsi síly 🤸️, nyní máš " +
-          hrac.hp +
+          s.hrac.hp +
           " HP.";
-        if (predmety["Peníze"] >= 10) {
+        if (s.predmety["Peníze"] >= 10) {
           txt += " Stálo tě to 10 zlaťáků.";
         } else {
           txt += " Hostinský tě z lítosti ubytoval zadarmo.";
@@ -103,7 +102,8 @@ async function pribehHrdiny() {
             "Dorazil jsi na hrad, a tam ti místní nabídli, že si můžeš uložit svou hru, přijmeš tuto laskavou nabídku?"
           )
         ) {
-          await zprava("Nějako to zatím nefunguje kámo xD");
+          let nazevhry = await dotaz("Jak chceš aby se ulažená hra jmenovala?");
+          ulozit(nazevhry);
         }
         break;
 
@@ -115,7 +115,7 @@ async function pribehHrdiny() {
         txt += " Jsi venku, kolem tebe je " + misto + ".";
     }
 
-    if (hrac.hp <= 0) {
+    if (s.hrac.hp <= 0) {
       zprava(txt + " Zemřel jsi 😭️ ☠️");
       return;
     }
@@ -125,16 +125,16 @@ async function pribehHrdiny() {
 
     switch (smer) {
       case "s":
-        hrac.y -= 1;
+        s.hrac.y -= 1;
         break;
       case "j":
-        hrac.y += 1;
+        s.hrac.y += 1;
         break;
       case "v":
-        hrac.x += 1;
+        s.hrac.x += 1;
         break;
       case "z":
-        hrac.x -= 1;
+        s.hrac.x -= 1;
         break;
     }
 
@@ -143,26 +143,26 @@ async function pribehHrdiny() {
 }
 
 async function pohlidatOkraje() {
-  if (hrac.y < 0) {
-    hrac.y = 0;
+  if (s.hrac.y < 0) {
+    s.hrac.y = 0;
     await zprava(
       "Narazil jsi na hlubokou propast 🕳️, dál nemůžeš.",
       "Vrátit se zpět"
     );
-  } else if (hrac.y >= mapa.length) {
-    hrac.y = mapa.length - 1;
+  } else if (s.hrac.y >= s.mapa.length) {
+    s.hrac.y = s.mapa.length - 1;
     await zprava(
       "Narazil jsi na vysoký útes 🏔️, dál nemůžeš.",
       "Vrátit se zpět"
     );
-  } else if (hrac.x < 0) {
-    hrac.x = 0;
+  } else if (s.hrac.x < 0) {
+    s.hrac.x = 0;
     await zprava(
       "Narazil jsi na neprostupný les 🌲️, dál nemůžeš.",
       "Vrátit se zpět"
     );
-  } else if (hrac.x >= mapa[hrac.y].length) {
-    hrac.x = mapa[hrac.y].length - 1;
+  } else if (s.hrac.x >= s.mapa[s.hrac.y].length) {
+    s.hrac.x = s.mapa[s.hrac.y].length - 1;
 
     let jitDal = await otazka(
       "Narazil jsi na nekonečnou poušť 🏜️, když půjdeš dál, " +
@@ -172,10 +172,10 @@ async function pohlidatOkraje() {
     );
 
     if (jitDal) {
-      hrac.hp = -100;
-      mapa.length = 0;
-      mapa[0] = ["Poušť"];
-      hrac.x = hrac.y = 0;
+      s.hrac.hp = -100;
+      s.mapa.length = 0;
+      s.mapa[0] = ["Poušť"];
+      s.hrac.x = s.hrac.y = 0;
     }
   }
 }
