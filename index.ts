@@ -38,7 +38,7 @@ async function pribehHrdiny() {
 
       const slot = await dotaz(txt);
       const nazevHry = nazvyUlozenychHer()[+slot];
-      
+
       if (nazevHry === undefined) {
         await zprava("Žádná taková hra tam není!");
       } else {

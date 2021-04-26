@@ -1,6 +1,6 @@
 import { otazka, zprava } from "./ui";
-import { defaultState } from "./state";
-const { predmety } = defaultState;
+import { state } from "./state";
+const { predmety } = state;
 
 export async function obchod() {
   let txt =
@@ -15,6 +15,8 @@ export async function obchod() {
 
   txt =
     "Máme tady tento krásný meč, ⚔️ stojí 100 zlaťáků 💯️ a přidá ti 20 damage ke každému ÚDERU. 🤜️ Chceš ho koupit?";
+  txt += " (Máš " + predmety["Peníze"] + " zlaťáků.)";
+
   if (predmety["Meč"] == 1) txt += " (Už jeden máš.)";
   if (predmety["Meč"] > 1) txt += " (Už jich máš " + predmety["Meč"] + ".)";
 
@@ -30,6 +32,8 @@ export async function obchod() {
 
   txt =
     "Léčivý lektvar! 🏺️ Uleví od bolestí, spraví každou zlomeninu, pomůže od zažívacích potízí! 🤢️ Je to zázrak! 🤑️ Pouhých 50 zlaťáků! Máš zájem?";
+  txt += " (Máš " + predmety["Peníze"] + " zlaťáků.)";
+  
   if (predmety["Léčivý lektvar"] > 0)
     txt += " (Teď jich máš " + predmety["Léčivý lektvar"] + ".)";
 
