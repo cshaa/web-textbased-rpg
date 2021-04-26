@@ -45,4 +45,3 @@ export function nazvyUlozenychHer(): string[] {
   const savedGames = JSON.parse(localStorage.getItem('savedGames') ?? '{}');
   return Object.keys(savedGames);
 }
-

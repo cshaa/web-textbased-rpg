@@ -1,5 +1,5 @@
-import { kompas, otazka, zprava } from "./ui";
-import { defaultState } from "./state";
+import { kompas, otazka, zprava, dotaz } from "./ui";
+import { defaultState, nazvyUlozenychHer, nahrat, ulozit } from "./state";
 import { obchod } from "./obchod";
 import { soubojSNahodnouPotvorou } from "./souboj";
 import {
@@ -8,6 +8,7 @@ import {
   zrusZvyrazneniPoli,
   zvyrazniPole
 } from "./mapa";
+import "./style.css";
 const { hrac, predmety, mapa } = defaultState;
 
 let strt = document.querySelector<HTMLButtonElement>("#start");
@@ -29,8 +30,22 @@ function start() {
 }
 
 async function pribehHrdiny() {
-  if (!(await otazka("Vítej hrdino! Chceš bojovat?"))) {
-    await otazka("To mě mrzí 😔️", "Rozmyslel jsem si to!", "Ne, kecám!");
+  if (await otazka("Vítej hrdino! Chceš načíst uloženou hru?")) {
+    while (true) {
+      const txt = nazvyUlozenychHer()
+        .map((h, i) => i + ". slot: " + h)
+        .join("\n");
+
+      const slot = await dotaz(txt);
+      const nazevHry = nazvyUlozenychHer()[+slot];
+      
+      if (nazevHry === undefined) {
+        await zprava("Žádná taková hra tam není!");
+      } else {
+        nahrat(nazevHry);
+        break;
+      }
+    }
   }
 
   generujPrazdnouMapu();
@@ -79,6 +94,16 @@ async function pribehHrdiny() {
           txt += " Stálo tě to 10 zlaťáků.";
         } else {
           txt += " Hostinský tě z lítosti ubytoval zadarmo.";
+        }
+        break;
+
+      case "Hrad":
+        if (
+          await otazka(
+            "Dorazil jsi na hrad, a tam ti místní nabídli, že si můžeš uložit svou hru, přijmeš tuto laskavou nabídku?"
+          )
+        ) {
+          await zprava("Nějako to zatím nefunguje kámo xD");
         }
         break;
 
