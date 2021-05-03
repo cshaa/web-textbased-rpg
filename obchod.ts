@@ -1,5 +1,6 @@
 import { otazka, zprava } from "./ui";
 import { state as s } from "./state";
+import{potvory,} from "./souboj";
 
 export async function obchod() {
   let txt =
@@ -45,4 +46,39 @@ export async function obchod() {
       await zprava("Nemáš nárok na takovýto luxus, bídáku! Vrať se s penězi!");
     }
   }
+  txt =
+    "Narazil jsi na nepřitele a došlo ti, že na něj nemáš? Přál jsi si zmizet? Od toho jsou naše srandovní fazolky! Jenom 30 zlaťáků! Bohužel můžou nastat tyto nežádoucí účinky: Nevolnost, zvracení, motání hlavy, mdloby, zmatení. Pokud jsi epileptik, poraď se před použitím se svým lékařem.";
+  txt += " (Máš " + s.predmety["Peníze"] + " zlaťáků.)";
+
+  if (s.predmety["Srandovní fazolky"] > 0)
+    txt += " (Teď jich máš " + s.predmety["Srandovní fazolky"] + ".)";
+
+  if (await otazka(txt)) {
+    if (s.predmety["Peníze"] >= 30) {
+      s.predmety["Peníze"] -= 30;
+      s.predmety["Srandovní fazolky"] += 1;
+      await zprava("Jednou mi budeš za to poděkuješ, věř mi...");
+    } else {
+      await zprava("Tak hele, výroba je drahá, a žádné výjmky neexistují! Vrať se sem až budeš mít něco v peněžence 🤬");
+    }
+  }
+    txt =
+    "Už sis někdy přál být odolnější? Od toho je naše brnění! Čistá ocel! Trochu těžší, ale poslouží :) Pouhopouhých 70 zlaťáků!";
+  txt += " (Máš " + s.predmety["Peníze"] + " zlaťáků.)";
+
+  if (s.predmety["Brnění"] == 1)
+    txt += " (Už jedno máš.)"
+    if (s.predmety["Brnění"] > 1)
+    txt += "(Už jich máš " + s.predmety.Brnění + ".)";
+
+
+  if (await otazka(txt)) {
+    if (s.predmety["Peníze"] >= 70) {
+      s.predmety["Peníze"] -= 70;
+      s.predmety["Brnění"] += 1;
+      await zprava("Děkujeme vám za nákup v obchodě Tesco ");
+    } else {
+      await zprava("Si tu ocel sežeň sám, nebo si sežeň peníze.");
+}
+}
 }

@@ -11,7 +11,7 @@ export function generujPrazdnouMapu() {
     for (const misto of radek) {
       const td = document.createElement("td");
       td.id = `mapa-misto-x${x}y${y}`;
-      td.textContent = "⬛";
+      td.textContent = "❓";
       tr.appendChild(td);
       x += 1;
     }
@@ -47,5 +47,6 @@ export const legenda = {
   Start: "🚩️",
   Hotel: "🏨️",
   Dům: "🏠️",
-  Poušť: "🏜️"
+  Poušť: "🏜️",
+  Krčma: "🍺"
 } as const;

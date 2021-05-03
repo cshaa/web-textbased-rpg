@@ -6,7 +6,8 @@ export let potvory = [
   { jmeno: "Horský troll", hp: 300, dmg: 10 },
   { jmeno: "Pavouk", hp: 10, dmg: 10 },
   { jmeno: "Jedovatý pavouk", hp: 10, dmg: 50 },
-  { jmeno: "Skřet", hp: 120, dmg: 30 }
+  { jmeno: "Skřet", hp: 120, dmg: 30 },
+  {jmeno: "Nerudný stařík", hp: 600, dmg: 2}
 ];
 
 export async function soubojSNahodnouPotvorou() {
@@ -26,6 +27,10 @@ export async function soubojSNahodnouPotvorou() {
 
     case "Skřet":
       txt += " a křičel u toho jako smyslů zbavený. 👺️";
+      break;
+
+    case "Nerudný stařík":
+      txt += " mávaje při tom svou holí. 👴";
       break;
 
     default:
@@ -72,9 +77,8 @@ export async function soubojSNahodnouPotvorou() {
         await zprava("Bubli bubli! Nyní máš " + s.hrac.hp + " HP!");
       }
     }
-
-    let kop = await otazka("Co uděláš?", "🦶 Kopnu ho", "🤜️ Praštím ho");
-
+      let kop = await otazka ("Co uděláš?", "🦶 Kopnu ho", "🤜 Praštím ho");
+    
     txt = potv.jmeno + " má " + hpPotvory + " HP.";
 
     if (kop) {
