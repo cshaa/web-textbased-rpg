@@ -21,7 +21,8 @@ export namespace defaultState {
   export let hrac = {
     x: 1,
     y: 1,
-    hp: 100
+    hp: 100,
+    difficultyMultiplyer: 1
   };
 }
 

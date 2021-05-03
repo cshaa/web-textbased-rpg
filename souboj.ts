@@ -7,7 +7,7 @@ export let potvory = [
   { jmeno: "Pavouk", hp: 10, dmg: 10 },
   { jmeno: "Jedovatý pavouk", hp: 10, dmg: 50 },
   { jmeno: "Skřet", hp: 120, dmg: 30 },
-  {jmeno: "Nerudný stařík", hp: 600, dmg: 2}
+  { jmeno: "Nerudný stařík", hp: 600, dmg: 2 }
 ];
 
 export async function soubojSNahodnouPotvorou() {
@@ -17,7 +17,7 @@ export async function soubojSNahodnouPotvorou() {
     return await zprava("Nikdo! Máš štěstí! 🍀️");
   }
 
-  let hpPotvory = potv.hp;
+  let hpPotvory = potv.hp * s.hrac.difficultyMultiplyer;
   let txt = potv.jmeno + " a zaútočil na tebe";
 
   switch (potv.jmeno) {
@@ -77,8 +77,8 @@ export async function soubojSNahodnouPotvorou() {
         await zprava("Bubli bubli! Nyní máš " + s.hrac.hp + " HP!");
       }
     }
-      let kop = await otazka ("Co uděláš?", "🦶 Kopnu ho", "🤜 Praštím ho");
-    
+    let kop = await otazka("Co uděláš?", "🦶 Kopnu ho", "🤜 Praštím ho");
+
     txt = potv.jmeno + " má " + hpPotvory + " HP.";
 
     if (kop) {
@@ -109,6 +109,7 @@ export async function soubojSNahodnouPotvorou() {
         " " + potv.jmeno + " zemřel, 😁️ měl u sebe " + coins + " zlaťáků.";
       s.predmety["Peníze"] += coins;
       txt += " Nyní máš " + s.predmety["Peníze"] + " zlaťáků. 💰️";
+      s.hrac.difficultyMultiplyer *= 1.1;
     }
 
     if (hpPotvory > 0) {

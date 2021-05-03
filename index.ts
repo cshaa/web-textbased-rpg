@@ -29,10 +29,12 @@ function start() {
 }
 
 async function pribehHrdiny() {
-  if (await otazka("Vítej hrdino! Chceš načíst uloženou hru?(napiš její číslo)")) {
+  if (
+    await otazka("Vítej hrdino! Chceš načíst uloženou hru?(napiš její číslo)")
+  ) {
     while (true) {
       const txt = nazvyUlozenychHer()
-        .map((h, i) => "Hra č. " + i + ": " + h )
+        .map((h, i) => "Hra č. " + i + ": " + h)
         .join("\n");
 
       const slot = await dotaz(txt);
@@ -60,24 +62,39 @@ async function pribehHrdiny() {
 
     switch (misto) {
       case "Dům":
-        if(s.hrac.hp < 100, s.predmety.Brnění == 0){
+        if (s.hrac.hp < 100 && s.predmety.Brnění == 0) {
           s.hrac.hp = Math.max(s.hrac.hp, 100);
-          txt += "Narazil jsi na dům a vpadl jsi dovnitř. Byla tam milá stařenka a ta ti dala najíst a dovolila ti tam přespat. Tvoje HP je obnoveno, nyní máš 100 HP." 
+          txt +=
+            "Narazil jsi na dům a vpadl jsi dovnitř. Byla tam milá stařenka a ta ti dala najíst a dovolila ti tam přespat. Tvoje HP je obnoveno, nyní máš " +
+            s.hrac.hp +
+            " HP.";
+        } else if (s.predmety.Brnění > 0 && s.hrac.hp < 150) {
+          s.hrac.hp = 150;
+          txt +=
+            "Narazil jsi na dům a vpadl jsi dovnitř. Byla tam milá stařenka a ta ti dala najíst a dovolila ti tam přespat. Tvoje HP je obnoveno, nyní máš " +
+            s.hrac.hp +
+            " HP.";
+        } else if (
+          s.hrac.hp > 150 &&
+          s.predmety.Peníze > 19 &&
+          s.predmety.Brnění == 0
+        ) {
+          s.hrac.hp -= 10;
+          s.predmety.Peníze -= 20;
+          txt +=
+            "Narazil jsi na dům a vpadl jsi dovnitř. Byla tam nerudná bába. Zmlátila tě holí a obrala tě o 20 zlaťáků. Nyní máš " +
+            s.hrac.hp +
+            " HP a " +
+            s.predmety.Peníze +
+            " zlaťáků.";
+        } else {
+          s.hrac.hp -= 10;
+          txt +=
+            "Narazil jsi na dům a vpadl jsi dovnitř. Byla tam nerudná bába. Zmlátila tě holí a nyní máš " +
+            s.hrac.hp +
+            " HP.";
         }
-        else if(s.predmety.Brnění > 0, s.hrac.hp < 150){
-          s.hrac.hp = 150
-          txt += "Narazil jsi na dům a vpadl jsi dovnitř. Byla tam milá stařenka a ta ti dala najíst a dovolila ti tam přespat. Tvoje HP je obnoveno, nyní máš 150 HP." 
-        }
-        else if(s.hrac.hp > 150, s.predmety.Peníze > 19, s.predmety.Brnění == 0){
-          s.hrac.hp -= 10
-          s.predmety.Peníze -= 20
-          txt += "Narazil jsi na dům a vpadl jsi dovnitř. Byla tam nerudná bába. Zmlátila tě holí a obrala tě o 20 zlaťáků. Nyní máš " + s.hrac.hp + " HP a " + s.predmety.Peníze + " zlaťáků."
-        }
-        else{
-          s.hrac.hp -= 10
-          txt += "Narazil jsi na dům a vpadl jsi dovnitř. Byla tam nerudná bába. Zmlátila tě holí a nyní máš " + s.hrac.hp + " HP."  
-        }
-          
+
         break;
 
       case "Les":
@@ -115,7 +132,9 @@ async function pribehHrdiny() {
             "Dorazil jsi na hrad, a tam ti místní nabídli, že si můžeš uložit svou hru, přijmeš tuto laskavou nabídku?"
           )
         ) {
-          let nazevhry = await dotaz("Jak chceš aby se ulažená hra jmenovala?cPokud chceš přepsat nějakou uloženou hru, napiš její jméno");
+          let nazevhry = await dotaz(
+            "Jak chceš aby se ulažená hra jmenovala?cPokud chceš přepsat nějakou uloženou hru, napiš její jméno"
+          );
           ulozit(nazevhry);
         }
         break;
@@ -125,27 +144,28 @@ async function pribehHrdiny() {
         break;
 
       case "Start":
-      txt = "Jsi tam, kde to vše začalo... "
-      break;
+        txt = "Jsi tam, kde to vše začalo... ";
+        break;
 
       case "Poušť":
-        if(s.predmety.Brnění > 0, s.hrac.hp < 200){
-          s.hrac.hp += 30
-          txt = "Narazil jsi na poušť, šel jsi dál a narazil na oázu. Tam ti opravili brnění a vyléčili tě, nyní máš " + s.hrac.hp + " HP.";
-        }
-        else if(s.hrac.hp < 150, s.predmety.Brnění == 0){
-          s.hrac.hp += 30
-          txt = "Narazil jsi na poušť, šel jsi dál a narazil na oázu. Tam tě vyléčili, nyní máš " + s.hrac.hp + " HP.";
-        }
-
-        else
-          s.hrac.hp -= 50
-          txt = "Narazil jsi na poušť, a v bláznivé naději že najdeš oázu jsi šel dál. Bohužel, žádnou oázu jsi nenašel a přišel jsi o 50 HP, máš už jen " + s.hrac.hp + " HP."
-      break;      
-        
-
-
-    
+        if ((s.predmety.Brnění > 0, s.hrac.hp < 200)) {
+          s.hrac.hp += 30;
+          txt =
+            "Narazil jsi na poušť, šel jsi dál a narazil na oázu. Tam ti opravili brnění a vyléčili tě, nyní máš " +
+            s.hrac.hp +
+            " HP.";
+        } else if ((s.hrac.hp < 150, s.predmety.Brnění == 0)) {
+          s.hrac.hp += 30;
+          txt =
+            "Narazil jsi na poušť, šel jsi dál a narazil na oázu. Tam tě vyléčili, nyní máš " +
+            s.hrac.hp +
+            " HP.";
+        } else s.hrac.hp -= 50;
+        txt =
+          "Narazil jsi na poušť, a v bláznivé naději že najdeš oázu jsi šel dál. Bohužel, žádnou oázu jsi nenašel a přišel jsi o 50 HP, máš už jen " +
+          s.hrac.hp +
+          " HP.";
+        break;
 
       default:
         txt += " Jsi venku, kolem tebe je " + misto + ".";
