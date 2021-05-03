@@ -2,9 +2,11 @@ import { legenda } from "./mapa";
 
 export namespace defaultState {
   export let mapa: (keyof typeof legenda)[][] = [
-    ["Jeskyně", "Obchod", "Les", "Les", "Les"],
-    ["Jeskyně", "Start", "Jeskyně", "Hrad", "Jeskyně"],
-    ["Les", "Hotel", "Les", "Dům", "Les"]
+    ["Jeskyně", "Obchod", "Les", "Krčma", "Les"],
+    ["Poušť", "Start", "Jeskyně", "Hrad", "Jeskyně"],
+    ["Les", "Hotel", "Poušť", "Dům", "Les"],
+    ["Krčma", "Jeskyně", "Obchod", "Hrad", "Poušť"],
+    ["Les", "Dům", "Krčma", "Jeskyně", "Les"]
   ];
 
   export let predmety = {

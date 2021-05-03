@@ -1,4 +1,5 @@
-let input = document.querySelector<HTMLInputElement>("#input");
+let input = document.querySelector<HTMLInputElement>("#input")
+let input2 = document.querySelector<HTMLInputElement>("#input");
 let textik = document.querySelector<HTMLElement>("#textik");
 let tl1 = document.querySelector<HTMLElement>("#tl1");
 let tl2 = document.querySelector<HTMLElement>("#tl2");
@@ -10,6 +11,7 @@ tl2.style.display = "none";
 tl3.style.display = "none";
 tl4.style.display = "none";
 input.style.display = "none";
+input2.style.display = "none";
 
 export function tlacitkoStisknuto() {
   let promise = new Promise<1 | 2 | 3 | 4>(function(res, rej) {
@@ -101,10 +103,14 @@ export async function kompas(txt: string) {
   }
 }
 
-export async function dotaz(txt: string, ok: string = "OK") {
+export async function dotaz(
+  txt: string,
+  ok: string = "OK",
+  vychozi: string = ""
+) {
   tl1.style.display = "";
   tl1.textContent = ok;
-  input.value = "";
+  input.value = vychozi;
   input.style.display = "";
 
   tl2.style.display = "none";
