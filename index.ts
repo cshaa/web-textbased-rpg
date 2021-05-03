@@ -30,7 +30,7 @@ function start() {
 
 async function pribehHrdiny() {
   if (
-    await otazka("Vítej hrdino! Chceš načíst uloženou hru?(napiš její číslo)")
+    await otazka("Vítej hrdino! Chceš načíst uloženou hru? (napiš její číslo)")
   ) {
     while (true) {
       const txt = nazvyUlozenychHer()
