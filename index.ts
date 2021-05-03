@@ -60,7 +60,7 @@ async function pribehHrdiny() {
 
     switch (misto) {
       case "Dům":
-        if(s.hrac.hp < 100, s.predmety.Brnění = 0){
+        if(s.hrac.hp < 100, s.predmety.Brnění == 0){
           s.hrac.hp = Math.max(s.hrac.hp, 100);
           txt += "Narazil jsi na dům a vpadl jsi dovnitř. Byla tam milá stařenka a ta ti dala najíst a dovolila ti tam přespat. Tvoje HP je obnoveno, nyní máš 100 HP." 
         }
@@ -68,7 +68,7 @@ async function pribehHrdiny() {
           s.hrac.hp = 150
           txt += "Narazil jsi na dům a vpadl jsi dovnitř. Byla tam milá stařenka a ta ti dala najíst a dovolila ti tam přespat. Tvoje HP je obnoveno, nyní máš 150 HP." 
         }
-        else if(s.hrac.hp > 150, s.predmety.Peníze > 19, s.predmety.Brnění = 0){
+        else if(s.hrac.hp > 150, s.predmety.Peníze > 19, s.predmety.Brnění == 0){
           s.hrac.hp -= 10
           s.predmety.Peníze -= 20
           txt += "Narazil jsi na dům a vpadl jsi dovnitř. Byla tam nerudná bába. Zmlátila tě holí a obrala tě o 20 zlaťáků. Nyní máš " + s.hrac.hp + " HP a " + s.predmety.Peníze + " zlaťáků."
@@ -133,7 +133,7 @@ async function pribehHrdiny() {
           s.hrac.hp += 30
           txt = "Narazil jsi na poušť, šel jsi dál a narazil na oázu. Tam ti opravili brnění a vyléčili tě, nyní máš " + s.hrac.hp + " HP.";
         }
-        else if(s.hrac.hp < 150, s.predmety.Brnění){
+        else if(s.hrac.hp < 150, s.predmety.Brnění == 0){
           s.hrac.hp += 30
           txt = "Narazil jsi na poušť, šel jsi dál a narazil na oázu. Tam tě vyléčili, nyní máš " + s.hrac.hp + " HP.";
         }
