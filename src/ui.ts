@@ -14,7 +14,7 @@ input.style.display = "none";
 input2.style.display = "none";
 
 export function tlacitkoStisknuto() {
-  let promise = new Promise<1 | 2 | 3 | 4>(function(res, rej) {
+  let promise = new Promise<1 | 2 | 3 | 4>(function (res, rej) {
     tl1.addEventListener("click", tl1_click);
     tl2.addEventListener("click", tl2_click);
     tl3.addEventListener("click", tl3_click);
@@ -122,4 +122,12 @@ export async function dotaz(
 
   input.style.display = "none";
   return input.value;
+}
+
+export async function konecnaZprava(txt: string) {
+  tl1.style.display = "none";
+  tl2.style.display = "none";
+  tl3.style.display = "none";
+  tl4.style.display = "none";
+  textik.textContent = txt;
 }
