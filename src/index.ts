@@ -1,4 +1,4 @@
-import { kompas, otazka, zprava, dotaz } from "./ui";
+import { kompas, otazka, zprava, dotaz, konecnaZprava } from "./ui";
 import { state as s, nazvyUlozenychHer, nahrat, ulozit } from "./state";
 import { obchod } from "./obchod";
 import { soubojSNahodnouPotvorou } from "./souboj";
@@ -21,7 +21,7 @@ rstrt.addEventListener("click", () => {
 function start() {
   strt.style.display = "none";
   pribehHrdiny().then(
-    () => {},
+    () => { },
     ({ message }) => {
       console.error(message);
     }
@@ -172,8 +172,7 @@ async function pribehHrdiny() {
     }
 
     if (s.hrac.hp <= 0) {
-      tl1.style.display = "none";
-      zprava(" Zemřel jsi 😭️ ☠️");
+      konecnaZprava(" Zemřel jsi 😭️ ☠️");
       return;
     }
 
@@ -223,7 +222,7 @@ async function pohlidatOkraje() {
 
     let jitDal = await otazka(
       "Narazil jsi na nekonečnou poušť 🏜️, když půjdeš dál, " +
-        "jistě zemřeš žízní a vyčerpáním.",
+      "jistě zemřeš žízní a vyčerpáním.",
       "Jít dál",
       "Vrátit se zpět"
     );
